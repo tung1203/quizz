@@ -1,16 +1,22 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import Home from '../screens/Home';
+import React, {useState, useEffect} from 'react';
+import SplashScreen from './SplashScreen';
+import AppContainer from './AppContainer';
 
-const Stack = createStackNavigator();
-const AppContainer = () => (
-  <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
-export default AppContainer;
+const App = () => {
+  const [isSplash, setSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSplash(false);
+    }, 2000);
+  }, []);
+
+  return (
+    <React.Fragment>
+      {isSplash ? <SplashScreen /> : <AppContainer />}
+    </React.Fragment>
+  );
+};
+
+export default App;
