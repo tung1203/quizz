@@ -1,4 +1,4 @@
-import config from 'quizz/config.js';
+import config from '../config';
 import axios from 'axios';
 
 const axiosInstance = axios.create({

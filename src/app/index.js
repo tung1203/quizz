@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SplashScreen from './SplashScreen';
-import AppContainer from './AppContainer';
+import Navigator from './Navigator';
 
 const App = () => {
   const [isSplash, setSplash] = useState(true);
@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <React.Fragment>
-      {isSplash ? <SplashScreen /> : <AppContainer />}
+      {isSplash ? <SplashScreen /> : <Navigator />}
     </React.Fragment>
   );
 };

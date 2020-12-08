@@ -1,3 +1,0 @@
-export const GET_TOPIC = 'GET_TOPIC';
-export const GET_TOPIC_SUCCESS = 'GET_TOPIC_SUCCESS';
-export const GET_TOPIC_FAILD = 'GET_TOPIC_FAILD';
