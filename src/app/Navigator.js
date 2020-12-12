@@ -1,7 +1,10 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { createRef } from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from '@react-navigation/stack';
 import { StyleProvider } from 'native-base';
 import { Provider } from 'react-redux';
 
@@ -11,23 +14,76 @@ import commonColor from '../native-base-theme/variables/commonColor';
 import Home from '../screens/Home';
 import TopicScreen from '../screens/Topic';
 import QuestionScreen from '../screens/Question';
+import ResultScreen from '../screens/Question/Result.container';
 import store from '../store';
 
 const Stack = createStackNavigator();
+export const navigationRef = createRef();
 
-const RootMainStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="HomeScreen" component={Home} />
-    <Stack.Screen name="TopicScreen" component={TopicScreen} />
-    <Stack.Screen name="QuestionScreen" component={QuestionScreen} />
-  </Stack.Navigator>
-);
+const screenOptions = () => ({
+  headerStyle: {
+    elevation: 0,
+    backgroundColor: 'transparent',
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+  cardOverlayEnabled: true,
+  headerTitleAlign: 'center',
+  headerTransparent: true,
+  headerShown: true,
+});
+
+const RootMainStack = () => {
+  return (
+    <Stack.Navigator mode="modal" screenOptions={screenOptions}>
+      <Stack.Screen
+        name="HomeScreen"
+        component={Home}
+        options={{ title: 'Categories' }}
+      />
+      <Stack.Screen
+        name="TopicScreen"
+        component={TopicScreen}
+        options={{ title: 'Topics' }}
+      />
+      <Stack.Screen
+        name="QuestionScreen"
+        component={QuestionScreen}
+        options={{
+          title: 'Question',
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontSize: 23,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ResultScreen"
+        component={ResultScreen}
+        options={{
+          title: 'Result',
+          headerLeft: props => {
+            console.log(props);
+            return (
+              <HeaderBackButton
+                label="Topics"
+                onPress={() => navigationRef.current.navigate('TopicScreen')}>
+                Topic
+              </HeaderBackButton>
+            );
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const Navigator = () => {
   return (
     <Provider store={store}>
       <StyleProvider style={getTheme(commonColor)}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <RootMainStack />
         </NavigationContainer>
       </StyleProvider>

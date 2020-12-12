@@ -19,7 +19,12 @@ export const getListCategoryFinished = value => ({
 export const getListCategory = () => {
   return async dispatch => {
     dispatch(getListCategoryStarted());
-    const { data } = await axios.get('/categories');
-    dispatch(getListCategoryFinished(data));
+    try {
+      const { data } = await axios.get('/categories');
+      dispatch(getListCategoryFinished(data));
+    } catch (error) {
+      console.error(error);
+      dispatch(getListCategoryError(error));
+    }
   };
 };

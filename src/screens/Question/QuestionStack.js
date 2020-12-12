@@ -6,7 +6,13 @@ import QuestionScreen from './Question';
 
 const Stack = createStackNavigator();
 
-const QuestionStack = ({ route, questions, getListQuestion }) => {
+const QuestionStack = ({
+  route,
+  questions,
+  getListQuestion,
+  answerQuestion,
+  submitQuestion,
+}) => {
   const { topicId } = route.params;
 
   useEffect(() => {
@@ -21,15 +27,23 @@ const QuestionStack = ({ route, questions, getListQuestion }) => {
       </View>
     );
   }
+
   return (
     <Stack.Navigator>
-      {questions.map(question => (
+      {questions.map((question, ordinalScreen) => (
         <Stack.Screen
           key={question.ID}
-          name={`question-${question.ID}`}
+          name={`Question-${ordinalScreen}`}
           component={QuestionScreen}
           options={() => ({ headerShown: false })}
-          initialParams={{ question }}
+          initialParams={{
+            question,
+            amountOfQuestion: questions.length,
+            ordinalScreen,
+            questionId: question.ID,
+            answerQuestion,
+            submitQuestion,
+          }}
         />
       ))}
     </Stack.Navigator>

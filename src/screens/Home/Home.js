@@ -1,26 +1,31 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import Category from '../../components/Category';
 
-const HomeScreen = ({ listCategories, getListCategory }) => {
+const HomeScreen = ({ listCategories, getListCategory, error }) => {
   useEffect(() => {
     getListCategory();
   }, [getListCategory]);
 
   return (
-    <View>
+    <SafeAreaView>
       <View style={styles.wrap}>
-        {listCategories &&
+        {error ? (
+          <Text>Something went wrong</Text>
+        ) : (
+          listCategories &&
           listCategories.map(category => (
             <Category key={category.ID} category={category} />
-          ))}
+          ))
+        )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   wrap: {
+    paddingTop: 50,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',

@@ -15,7 +15,12 @@ export const getListTopicFinished = value => ({
   type: types.GET_LIST_TOPICS_SUCCESS,
   payload: value,
 });
-
+const wait = time =>
+  new Promise(resolve =>
+    setTimeout(() => {
+      resolve('ok');
+    }, time)
+  );
 export const getListTopic = categoryId => {
   return async dispatch => {
     dispatch(getListTopicStarted());

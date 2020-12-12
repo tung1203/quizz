@@ -1,17 +1,17 @@
 import * as types from './types';
 import axios from '../../utils/axiosInstance';
 
-export const getListQuestionStarted = () => ({
+const getListQuestionStarted = () => ({
   type: types.GET_LIST_QUESTIONS,
   payload: true,
 });
 
-export const getListQuestionError = value => ({
+const getListQuestionError = value => ({
   type: types.GET_LIST_QUESTIONS_FAILURE,
   payload: value,
 });
 
-export const getListQuestionFinished = value => ({
+const getListQuestionFinished = value => ({
   type: types.GET_LIST_QUESTIONS_SUCCESS,
   payload: value,
 });
@@ -38,5 +38,34 @@ export const getListQuestion = topicId => {
       })
     );
     dispatch(getListQuestionFinished(questions));
+  };
+};
+
+export const answerQuestion = (questionId, answerId) => {
+  return async dispatch => {
+    dispatch({
+      type: types.ANSWER_QUESTION,
+      payload: { questionId, answerId },
+    });
+  };
+};
+const submitQuestionFinished = value => ({
+  type: types.SUBMIT_QUESTION,
+  payload: value,
+});
+
+export const submitQuestion = (questionId, answerId) => {
+  return async (dispatch, getState) => {
+    let answers = [
+      ...getState().questionReducer.answer,
+      { questionId, answerId },
+    ];
+    answers = answers.map(answer => ({
+      ID: answer.answerId,
+      questionId: answer.questionId,
+    }));
+    const { data } = await axios.post('/questions/checkAnswers', answers);
+
+    dispatch(submitQuestionFinished(data));
   };
 };

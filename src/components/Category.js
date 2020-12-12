@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import config from '../config';
 
 const Category = ({ category }) => {
   const navigation = useNavigation();
@@ -13,8 +14,13 @@ const Category = ({ category }) => {
         });
       }}>
       <View style={styles.wrapCategory}>
-        <Image style={styles.image} source={{ uri: category.Image }} />
-        <Text>{category.Name}</Text>
+        <Image
+          style={styles.image}
+          source={{
+            uri: `${config.API_URL}/images/${category.Image}`,
+          }}
+        />
+        <Text style={styles.text}>{category.Name}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -38,6 +44,10 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     marginBottom: 5,
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 15,
   },
 });
 export default Category;

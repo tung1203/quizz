@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Container, Content, List } from 'native-base';
+import { SafeAreaView } from 'react-native';
+import { Container, Content, List, Header } from 'native-base';
 import Topic from '../../components/Topic';
 
 const TopicScreen = ({ listTopics, getListTopic, route }) => {
@@ -12,7 +13,7 @@ const TopicScreen = ({ listTopics, getListTopic, route }) => {
   return (
     <Container>
       <Content>
-        <List>
+        <List style={{ marginTop: 40 }}>
           {listTopics.map(topic => (
             <Topic key={topic.ID} topic={topic} />
           ))}
