@@ -59,8 +59,7 @@ const QuestionScreen = ({ route }) => {
           />
         ))}
       </View>
-      {ordinalScreen + 1 === 3 ? (
-        // {ordinalScreen + 1 === amountOfQuestion ? (
+      {ordinalScreen + 1 === amountOfQuestion ? (
         <Button
           style={[styles.buttonSubmit, styles.buttonDone]}
           onPress={() => {
